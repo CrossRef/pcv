@@ -10,7 +10,7 @@
 :javascript
   $(document).ready(function() {
     $('#doi-search').click(function(e) {
-      window.location = window.location + '/' + $('#doi-text').val();
+      window.location = '/' + $('#doi-text').val();
       e.preventDefault();
       return false;
     });

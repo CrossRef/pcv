@@ -7,7 +7,7 @@
 :javascript
   $(document).ready(function() {
     $('#doi-search').click(function(e) {
-      window.location = 'http://patents.crrd.dyndns.org/' + $('#doi-text').val();
+      window.location = '/' + $('#doi-text').val();
       e.preventDefault();
       return false;
     });
