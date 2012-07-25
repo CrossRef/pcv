@@ -1,0 +1,29 @@
+.row
+  .page-header
+    %h1 Patent Citation Search
+.row
+  .span6.offset3
+    .well
+      %form.form-search
+        %input.search-query#doi-text{:type => 'text', :placeholder => 'Enter a DOI...'}
+        %button.btn.btn-primary#doi-search Search
+:javascript
+  $(document).ready(function() {
+    $('#doi-search').click(function(e) {
+      window.location = 'http://patents.crrd.dyndns.org/' + $('#doi-text').val();
+      e.preventDefault();
+      return false;
+    });
+  });
+.row
+  %h2 Examples
+  %ul
+    %li
+      %a{:href => 'http://patents.crrd.dyndns.org/10.1038/332371a0'} 10.1038/332371a0
+      %span (Full-text matches)
+    %li
+      %a{:href => 'http://patents.crrd.dyndns.org/10.1101/gr.6.9.807'} 10.1101/gr.6.9.807
+      %span (Full-text and fielded matches)
+    %li
+      %a{:href => 'http://patents.crrd.dyndns.org/10.1021/bi00034a013'} 10.1021/bi00034a013
+      %span (Full-text and fielded matches)

@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+  ServerName          patents.crrd.dyndns.org
+  AllowEncodedSlashes On
+
+  ServerAdmin      kward@crossref.org
+  ErrorLog         /var/log/apache2/pcv_data_error_log
+  TransferLog      /var/log/apache2/pcv_data_access_log
+  UseCanonicalName Off
+
+  DocumentRoot /home/kward/patent-citations-viewer/public
+  <Directory /home/kward/patent-citations-viewer/public>
+    Allow from all
+    Options -MultiViews
+  </Directory>
+
+  PassengerMinInstances 2
+</VirtualHost>

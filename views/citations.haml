@@ -1,0 +1,41 @@
+.row
+  .span6.offset3
+    .well
+      %form.form-search
+        %input.search-query#doi-text{:type => 'text', :placeholder => 'Enter a DOI...'}
+        %button.btn.btn-primary#doi-search Search
+:javascript
+  $(document).ready(function() {
+    $('#doi-search').click(function(e) {
+      window.location = 'http://patents.crrd.dyndns.org/' + $('#doi-text').val();
+      e.preventDefault();
+      return false;
+    });
+    $('#doi-text').val('#{doi}');
+  });
+.row
+  %h1 
+    Patents that cite 
+    = doi
+.row
+  %table.table.table-bordered.table-striped
+    %thead
+      %tr
+        %th Patent Link
+        %th Citation Text
+        %th Match Type
+    %tbody
+      - citations.each do |citation|
+        %tr
+          %td 
+            %a{:href => "http://test.patentlens.net/lens/patent/" + citation['from']['id']}
+              = citation['from']['id']
+          %td= citation['citation']
+          %td
+            - if citation['field_match']
+              %span.label.label-success Fielded match
+            - elsif citation['likelihood']
+              %span.label.label-warning 
+                Full-text match (
+                = citation['likelihood']
+                confidence) 
