@@ -33,7 +33,7 @@ get '/*' do
 
     # Try to find cambia data for each patent key
     docs.map do |doc|
-      doc['cambia'] = settings.citations.find_one({:patent_key => doc['from']['id']})
+      doc['cambia'] = settings.patents.find_one({:patent_key => doc['from']['id']})
     end
 
     haml :citations, :locals => {:citations => docs, :doi => request_doi}
