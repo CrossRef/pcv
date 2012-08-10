@@ -21,15 +21,22 @@
   %table.table.table-bordered.table-striped
     %thead
       %tr
-        %th Patent Link
+        %th Patent
         %th Citation Text
         %th Match Type
     %tbody
       - citations.each do |citation|
         %tr
-          %td 
-            %a{:href => "http://test.patentlens.net/lens/patent/" + citation['from']['id']}
-              = citation['from']['id']
+          %td
+            - if citation['cambia'].nil?
+              %a{:href => "http://test.patentlens.net/lens/patent/#{citation['from']['id']}"}
+                = citation['from']['id']
+            - else
+              %a{:href => "http://test.patentlens.net/lens/patent/#{citation['cambia']['pub_key']}"}
+                - if citation['cambia']['title'].empty?
+                  = citation['from']['id']
+                - else  
+                  = citation['cambia']['title']
           %td= citation['citation']
           %td
             - if citation['field_match']

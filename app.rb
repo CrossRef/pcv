@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'sinatra'
 require 'mongo'
 require 'cgi'
@@ -6,6 +7,7 @@ configure do
   conn = Mongo::Connection.new
   crossref = conn['crossref']
   set :citations, crossref['citations']
+  set :patents, crossref['patents']
 end
 
 helpers do
@@ -28,6 +30,12 @@ get '/*' do
   else
     query = {'to.id' => request_doi}
     docs = settings.citations.find query
+
+    # Try to find cambia data for each patent key
+    docs.map do |doc|
+      doc['cambia'] = settings.citations.find_one({:patent_key => doc['from']['id']})
+    end
+
     haml :citations, :locals => {:citations => docs, :doi => request_doi}
   end
 end
