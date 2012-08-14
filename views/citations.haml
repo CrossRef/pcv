@@ -1,9 +1,13 @@
-.row
+.page-header
+  %h1
+    Patents that cite
+    = doi
+
+.row-fluid
   .span6.offset3
-    .well
-      %form.form-search
-        %input.search-query#doi-text{:type => 'text', :placeholder => 'Enter a DOI...'}
-        %button.btn.btn-primary#doi-search Search
+    %form.form-search.well{:style => 'text-align: center;'}
+      %input.search-query#doi-text{:type => 'text', :placeholder => 'Enter a DOI...'}
+      %button.btn.btn-primary#doi-search Search
 :javascript
   $(document).ready(function() {
     $('#doi-search').click(function(e) {
@@ -13,11 +17,7 @@
     });
     $('#doi-text').val('#{doi}');
   });
-.row
-  %h1 
-    Patents that cite 
-    = doi
-.row
+.row-fluid
   %table.table.table-bordered.table-striped
     %thead
       %tr
@@ -29,10 +29,10 @@
         %tr
           %td
             - if citation['cambia'].nil?
-              %a{:href => "http://test.patentlens.net/lens/patent/#{citation['from']['id']}"}
+              %a{:href => "http://beta.lens.org/lens/patent/#{citation['from']['id']}"}
                 = citation['from']['id']
             - else
-              %a{:href => "http://test.patentlens.net/lens/patent/#{citation['cambia']['pub_key']}"}
+              %a{:href => "http://beta.lens.org/lens/patent/#{citation['cambia']['pub_key']}"}
                 - if citation['cambia']['title'].empty?
                   = citation['from']['id']
                 - else  

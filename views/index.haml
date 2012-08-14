@@ -1,9 +1,8 @@
-.row
-  .page-header
-    %h1 Patent Citation Search
-.row
+.page-header
+  %h1 PatentCite
+.row-fluid
   .span6.offset3
-    .well
+    .well{:style => 'text-align: center;'}
       %form.form-search
         %input.search-query#doi-text{:type => 'text', :placeholder => 'Enter a DOI...'}
         %button.btn.btn-primary#doi-search Search
@@ -15,7 +14,7 @@
       return false;
     });
   });
-.row
+.row-fluid
   %h2 Examples
   %ul
     %li

@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'mongo'
 require 'cgi'
+require 'json'
 
 configure do
   conn = Mongo::Connection.new
@@ -24,6 +25,11 @@ helpers do
   end
 end
 
+get '/heartbeat' do
+  content_type 'application/json'
+  {:status => 'ok'}.to_json
+end
+
 get '/*' do
   if request_doi.empty?
     haml :index
@@ -32,9 +38,12 @@ get '/*' do
     docs = settings.citations.find query
 
     # Try to find cambia data for each patent key
-    docs.map do |doc|
-      doc['cambia'] = settings.citations.find_one({:patent_key => doc['from']['id']})
+    docs = docs.map do |doc|
+      doc.merge({'cambia' => settings.patents.find_one({:patent_key => doc['from']['id']})})
     end
+
+    # Remove duplicate patent keys
+    docs.uniq! { |doc| doc['cambia']['pub_key'] }
 
     haml :citations, :locals => {:citations => docs, :doi => request_doi}
   end
